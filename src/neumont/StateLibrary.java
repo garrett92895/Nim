@@ -118,9 +118,6 @@ public class StateLibrary
 		}
 	}
 
-	/*
-	 * abc acb bac bca cab cba
-	 */
 	public static String getTo(State to, State from)
 	{
 		int a = to.getOne();
