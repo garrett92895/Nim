@@ -1,6 +1,7 @@
 package neumont;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 public class StateLibrary
@@ -50,7 +51,7 @@ public class StateLibrary
 				|| (a.getOne() == b.getThree() && a.getTwo() == b.getTwo() && a.getThree() == b.getOne());
 	}
 
-	public static ArrayList<State> getPossibleStates()
+	public static Iterator<State> getPossibleStates()
 	{
 		ArrayList<State> possible = new ArrayList<State>();
 		for (State s : states)
@@ -60,7 +61,7 @@ public class StateLibrary
 				possible.add(s);
 			}
 		}
-		return possible;
+		return possible.iterator();
 	}
 
 	public static boolean isPossibleMove(State state)
@@ -82,10 +83,11 @@ public class StateLibrary
 	public static String getBestMove()
 	{
 		ArrayList<State> best = new ArrayList<State>();
-		ArrayList<State> possible = getPossibleStates();
-		best.add(possible.get(0));
-		for (State s : possible)
+		Iterator<State> possible = getPossibleStates();
+		best.add(possible.next());
+		while(possible.hasNext())
 		{
+			State s = possible.next();
 			if (s.getValue() < best.get(0).getValue())
 			{
 				best.clear();
