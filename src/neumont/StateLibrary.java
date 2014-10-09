@@ -184,10 +184,12 @@ public class StateLibrary
 
 	public static void valueMoves(boolean PlayerOneWin)
 	{
-		int moves = Game.getMoves().size();
+		int moves = Game.getNumOfMoves();
 		double i = 0;
-		for (Move m : Game.getMoves())
+		Iterator<Move> moveIterator = Game.getMoves();
+		while(moveIterator.hasNext())
 		{
+			Move m = moveIterator.next();
 			try
 			{
 				if (PlayerOneWin)

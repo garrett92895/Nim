@@ -1,6 +1,7 @@
 package neumont;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 public class Game
@@ -52,11 +53,16 @@ public class Game
 		Game.currentState = currentState;
 	}
 
-	public static ArrayList<Move> getMoves()
+	public static Iterator<Move> getMoves()
 	{
-		return moves;
+		return moves.iterator();
 	}
-
+	
+	public static int getNumOfMoves()
+	{
+		return moves.size();
+	}
+	
 	public Player getPlayerOne()
 	{
 		return playerOne;
