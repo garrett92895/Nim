@@ -5,21 +5,26 @@ import java.util.Scanner;
 
 public class Nim
 {
-	static Scanner scan = new Scanner(System.in);
-	static String input = "Start";
-	static Game game = new Game();
-	static String row;
-	static String amount;
-	static int computerGames = 0;
-	static int PlayerOneWins = 0;
-	static int PlayerTwoWins = 0;
-	static int PlayerOneComputerWins = 0;
-	static int PlayerTwoComputerWins = 0;
-	static boolean debugComputers = false;
-	static boolean printComputerWins = false;
+	static Scanner scan;
+	static Game game;
+	static String row, amount, input;
+	static int computerGames, PlayerOneWins, PlayerTwoWins,
+	PlayerOneComputerWins, PlayerTwoComputerWins;
+	static boolean debugComputers, printComputerWins;
 
 	public static void main(String[] args)
 	{
+		scan = new Scanner(System.in);
+		input = "Start";
+		game = new Game();
+		computerGames = 0;
+		PlayerOneWins = 0;
+		PlayerTwoWins = 0;
+		PlayerOneComputerWins = 0;
+		PlayerTwoComputerWins = 0;
+		debugComputers = false;
+		printComputerWins = false;
+		
 		StateLibrary.createAllStates();
 		Menu();
 	}
@@ -312,5 +317,102 @@ public class Nim
 				System.out.println("Invalid input, please try again.");
 			}
 		}
+	}
+
+	
+	public static Scanner getScan() {
+		return scan;
+	}
+
+	public static void setScan(Scanner scan) {
+		Nim.scan = scan;
+	}
+
+	public static Game getGame() {
+		return game;
+	}
+
+	public static void setGame(Game game) {
+		Nim.game = game;
+	}
+
+	public static String getRow() {
+		return row;
+	}
+
+	public static void setRow(String row) {
+		Nim.row = row;
+	}
+
+	public static String getAmount() {
+		return amount;
+	}
+
+	public static void setAmount(String amount) {
+		Nim.amount = amount;
+	}
+
+	public static String getInput() {
+		return input;
+	}
+
+	public static void setInput(String input) {
+		Nim.input = input;
+	}
+
+	public static int getComputerGames() {
+		return computerGames;
+	}
+
+	public static void setComputerGames(int computerGames) {
+		Nim.computerGames = computerGames;
+	}
+
+	public static int getPlayerOneWins() {
+		return PlayerOneWins;
+	}
+
+	public static void setPlayerOneWins(int playerOneWins) {
+		PlayerOneWins = playerOneWins;
+	}
+
+	public static int getPlayerTwoWins() {
+		return PlayerTwoWins;
+	}
+
+	public static void setPlayerTwoWins(int playerTwoWins) {
+		PlayerTwoWins = playerTwoWins;
+	}
+
+	public static int getPlayerOneComputerWins() {
+		return PlayerOneComputerWins;
+	}
+
+	public static void setPlayerOneComputerWins(int playerOneComputerWins) {
+		PlayerOneComputerWins = playerOneComputerWins;
+	}
+
+	public static int getPlayerTwoComputerWins() {
+		return PlayerTwoComputerWins;
+	}
+
+	public static void setPlayerTwoComputerWins(int playerTwoComputerWins) {
+		PlayerTwoComputerWins = playerTwoComputerWins;
+	}
+
+	public static boolean isDebugComputers() {
+		return debugComputers;
+	}
+
+	public static void setDebugComputers(boolean debugComputers) {
+		Nim.debugComputers = debugComputers;
+	}
+
+	public static boolean isPrintComputerWins() {
+		return printComputerWins;
+	}
+
+	public static void setPrintComputerWins(boolean printComputerWins) {
+		Nim.printComputerWins = printComputerWins;
 	}
 }
