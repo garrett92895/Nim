@@ -228,8 +228,8 @@ public class StateLibrary
 		return null;
 	}
 
-	public static ArrayList<State> getStates()
+	public static Iterator<State> getStates()
 	{
-		return states;
+		return states.iterator();
 	}
 }
