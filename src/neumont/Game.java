@@ -96,11 +96,7 @@ public class Game
 	
 	public Player getCurrentPlayer()
 	{
-		if(playerOneTurn)
-		{
-			return playerOne;
-		}
-		return playerTwo;
+		return playerOneTurn ? playerOne : playerTwo;
 	}
 	
 	public String getPlayerTurn()
@@ -120,14 +116,7 @@ public class Game
 	
 	public boolean isPlayerComputer()
 	{
-		if(playerOneTurn)
-		{
-			return getPlayerOne().isComputer();
-		}
-		else
-		{
-			return getPlayerTwo().isComputer();
-		}
+		return playerOneTurn ? getPlayerOne().isComputer() : getPlayerTwo().isComputer();
 	}
 	
 	public boolean gameEnded()
