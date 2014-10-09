@@ -28,7 +28,7 @@ public class Nim
 		System.out.println("Welcome to NIM!");
 		setup();
 
-		while (!input.equalsIgnoreCase("quit") && !input.equalsIgnoreCase("0"))
+		while (!"quit".equalsIgnoreCase(input) && !"0".equalsIgnoreCase(input))
 		{
 			if (computerGames > 0)
 			{
@@ -42,29 +42,22 @@ public class Nim
 				System.out.println("2: Play");
 				input = scan.nextLine();
 			}
-			if (input.equalsIgnoreCase("1") || input.equalsIgnoreCase("setup"))
+			if ("1".equalsIgnoreCase(input) || "setup".equalsIgnoreCase(input))
 			{
 				setup();
 			}
-			else if (input.equalsIgnoreCase("2") || input.equalsIgnoreCase("play"))
+			else if ("2".equalsIgnoreCase(input) || "play".equalsIgnoreCase(input))
 			{
 				play();
 			}
-			else if (input.equalsIgnoreCase("values"))
+			else if ("values".equalsIgnoreCase(input))
 			{
 				for (State s : StateLibrary.getStates())
 				{
 					System.out.println(s.getOne() + " " + s.getTwo() + " " + s.getThree() + " " + s.getValue());
 				}
 			}
-			else if (input.equalsIgnoreCase("raw values"))
-			{
-				for (State s : StateLibrary.getStates())
-				{
-					System.out.println(s.getOne() + " " + s.getTwo() + " " + s.getThree() + " " + s.getRawValue());
-				}
-			}
-			else if (input.equalsIgnoreCase("wins"))
+			else if ("wins".equalsIgnoreCase(input))
 			{
 				System.out.println("Player One has won " + PlayerOneWins + " game(s).");
 				System.out.println("Player Two has won " + PlayerTwoWins + " game(s).");
@@ -80,25 +73,13 @@ public class Nim
 		System.out.println("Setting up...");
 		System.out.println("Will player one be a player or a computer?");
 		input = scan.nextLine();
-		if (input.equalsIgnoreCase("player") || input.equalsIgnoreCase("p"))
-		{
-			game.getPlayerOne().setComputer(false);
-		}
-		else
-		{
-			game.getPlayerOne().setComputer(true);
-		}
+
+		game.getPlayerOne().setComputer(!("player".equalsIgnoreCase(input) || "p".equalsIgnoreCase(input)));
 
 		System.out.println("Will player two be a player or a computer?");
 		input = scan.nextLine();
-		if (input.equalsIgnoreCase("player") || input.equalsIgnoreCase("p"))
-		{
-			game.getPlayerTwo().setComputer(false);
-		}
-		else
-		{
-			game.getPlayerTwo().setComputer(true);
-		}
+
+		game.getPlayerTwo().setComputer(!("player".equalsIgnoreCase(input) || "p".equalsIgnoreCase(input)));
 	}
 
 	public static void play()
@@ -117,23 +98,17 @@ public class Nim
 			{
 				try
 				{
-					if (input.toLowerCase().endsWith("k"))
+					if ("k".endsWith(input.toLowerCase()))
 					{
 						input = input.substring(0, input.length() - 1);
 						computerGames = Integer.parseInt(input);
 						computerGames *= 1000;
 					}
-					else if (input.toLowerCase().endsWith("m"))
+					else if ("m".endsWith(input.toLowerCase()))
 					{
 						input = input.substring(0, input.length() - 1);
 						computerGames = Integer.parseInt(input);
 						computerGames *= 1000000;
-					}
-					else if (input.toLowerCase().endsWith("b"))
-					{
-						input = input.substring(0, input.length() - 1);
-						computerGames = Integer.parseInt(input);
-						computerGames *= 1000000000;
 					}
 					else
 					{
@@ -228,19 +203,19 @@ public class Nim
 	public static void printGame()
 	{
 		System.out.print("1 \t");
-		for (int i = 0; i < game.getCurrentState().getOne(); i++)
+		for (int i = 0; i < Game.getCurrentState().getOne(); i++)
 		{
 			System.out.print(" X ");
 		}
 
 		System.out.print("\n2 \t");
-		for (int i = 0; i < game.getCurrentState().getTwo(); i++)
+		for (int i = 0; i < Game.getCurrentState().getTwo(); i++)
 		{
 			System.out.print(" X ");
 		}
 
 		System.out.print("\n3 \t");
-		for (int i = 0; i < game.getCurrentState().getThree(); i++)
+		for (int i = 0; i < Game.getCurrentState().getThree(); i++)
 		{
 			System.out.print(" X ");
 		}
@@ -267,8 +242,8 @@ public class Nim
 				System.out.println("3");
 			}
 			String row = scan.nextLine();
-			if (row.equals("1") && Game.getCurrentState().getOne() > 0 || row.equals("2") && Game.getCurrentState().getTwo() > 0 || row.equals("3")
-					&& Game.getCurrentState().getThree() > 0)
+			if ("1".equals(row) && Game.getCurrentState().getOne() > 0 || "2".equals(row) && Game.getCurrentState().getTwo() > 0 || 
+					"3".equals(row) && Game.getCurrentState().getThree() > 0)
 			{
 				return row;
 			}
@@ -296,7 +271,7 @@ public class Nim
 			catch (Exception e)
 			{
 			}
-			if (amount.equalsIgnoreCase("row"))
+			if ("row".equalsIgnoreCase(amount))
 			{
 				row = row();
 			}
