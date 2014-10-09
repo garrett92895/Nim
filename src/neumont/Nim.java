@@ -1,5 +1,6 @@
 package neumont;
 
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class Nim
@@ -52,15 +53,21 @@ public class Nim
 			}
 			else if (input.equalsIgnoreCase("values"))
 			{
-				for (State s : StateLibrary.getStates())
+				Iterator<State> stateIterator = StateLibrary.getStates();
+				State s = null;
+				while(stateIterator.hasNext())
 				{
+					s = stateIterator.next();
 					System.out.println(s.getOne() + " " + s.getTwo() + " " + s.getThree() + " " + s.getValue());
 				}
 			}
 			else if (input.equalsIgnoreCase("raw values"))
 			{
-				for (State s : StateLibrary.getStates())
+				Iterator<State> stateIterator = StateLibrary.getStates();
+				State s = null;
+				while(stateIterator.hasNext())
 				{
+					s = stateIterator.next();
 					System.out.println(s.getOne() + " " + s.getTwo() + " " + s.getThree() + " " + s.getRawValue());
 				}
 			}
