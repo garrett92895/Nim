@@ -74,12 +74,11 @@ public class Nim
 		
 		System.out.println("Setting up...");
 		System.out.println("Will player one be a player or a computer?");
-		input = scan.nextLine();
-		boolean playerOneIsComputer = !("player".equalsIgnoreCase(input) || "p".equalsIgnoreCase(input));
-
+		String playerOneChoice = scan.nextLine();
 		System.out.println("Will player two be a player or a computer?");
-		input = scan.nextLine();
-		boolean playerTwoIsComputer = !("player".equalsIgnoreCase(input) || "p".equalsIgnoreCase(input));
+		String playerTwoChoice = scan.nextLine();
+		boolean playerOneIsComputer = !("player".equalsIgnoreCase(playerOneChoice) || "p".equalsIgnoreCase(playerOneChoice));
+		boolean playerTwoIsComputer = !("player".equalsIgnoreCase(playerTwoChoice) || "p".equalsIgnoreCase(playerTwoChoice));
 		
 		playerOne.setComputer(playerOneIsComputer);
 		playerTwo.setComputer(playerTwoIsComputer);
