@@ -69,16 +69,20 @@ public class Nim
 
 	public static void setup()
 	{
+		Player playerOne = game.getPlayerOne();
+		Player playerTwo = game.getPlayerTwo();
+		
 		System.out.println("Setting up...");
 		System.out.println("Will player one be a player or a computer?");
 		input = scan.nextLine();
-
-		game.getPlayerOne().setComputer(!("player".equalsIgnoreCase(input) || "p".equalsIgnoreCase(input)));
+		boolean playerOneIsComputer = !("player".equalsIgnoreCase(input) || "p".equalsIgnoreCase(input));
 
 		System.out.println("Will player two be a player or a computer?");
 		input = scan.nextLine();
-
-		game.getPlayerTwo().setComputer(!("player".equalsIgnoreCase(input) || "p".equalsIgnoreCase(input)));
+		boolean playerTwoIsComputer = !("player".equalsIgnoreCase(input) || "p".equalsIgnoreCase(input));
+		
+		playerOne.setComputer(playerOneIsComputer);
+		playerTwo.setComputer(playerTwoIsComputer);
 	}
 
 	public static void play()
@@ -277,49 +281,5 @@ public class Nim
 			}
 		}
 	}
-<<<<<<< HEAD
 
-	
-	public static Scanner getScan() {
-		return scan;
-	}
-
-	public static void setScan(Scanner scan) {
-		Nim.scan = scan;
-	}
-
-	public static Game getGame() {
-		return game;
-	}
-
-	public static void setGame(Game game) {
-		Nim.game = game;
-	}
-
-	public static String getRow() {
-		return row;
-	}
-
-	public static void setRow(String row) {
-		Nim.row = row;
-	}
-
-	public static String getAmount() {
-		return amount;
-	}
-
-	public static void setAmount(String amount) {
-		Nim.amount = amount;
-	}
-
-	public static String getInput() {
-		return input;
-	}
-
-	public static void setInput(String input) {
-		Nim.input = input;
-	}
-
-=======
->>>>>>> origin/master
 }
