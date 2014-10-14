@@ -28,7 +28,7 @@ public class StateLibrary
 			}
 		}
 	}
-	
+
 	public static void add(State s)
 	{
 		for (State listed : states)

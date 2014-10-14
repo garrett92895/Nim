@@ -25,7 +25,7 @@ public class Game
 		playerOne = new Player();
 		playerTwo = new Player();
 		
-		RandomPlayer();
+		randomPlayer();
 	}
 	
 	public Game(Player one, Player two)
@@ -40,7 +40,7 @@ public class Game
 		playerOne = one;
 		playerTwo = two;
 		
-		RandomPlayer();
+		randomPlayer();
 	}
 
 	public static State getCurrentState()
@@ -83,7 +83,7 @@ public class Game
 		this.playerTwo = playerTwo;
 	}
 	
-	public void RandomPlayer()
+	public void randomPlayer()
 	{
 		Random random = new Random();
 		playerOneTurn = random.nextInt(2) == 0;
@@ -114,9 +114,14 @@ public class Game
 		return !playerOneTurn;
 	}
 	
-	public boolean isPlayerComputer()
+	public boolean isCurrentPlayerComputer()
 	{
 		return playerOneTurn ? getPlayerOne().isComputer() : getPlayerTwo().isComputer();
+	}
+	
+	public boolean bothPlayersAreComputers()
+	{
+		return (playerOne.isComputer() && playerTwo.isComputer());
 	}
 	
 	public boolean gameEnded()
@@ -158,5 +163,15 @@ public class Game
 			}
 		}
 		catch(Exception e){}
+	}
+	
+	public void reset()
+	{
+		try
+		{currentState = new State(State.ONE, State.TWO, State.THREE);}
+		catch (Exception e)
+		{e.printStackTrace();}
+		moves.clear();
+		randomPlayer();
 	}
 }

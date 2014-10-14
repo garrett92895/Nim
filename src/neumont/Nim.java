@@ -5,26 +5,16 @@ import java.util.Scanner;
 
 public class Nim
 {
-	static Scanner scan;
-	static Game game;
-	static String row, amount, input;
-	static int computerGames, PlayerOneWins, PlayerTwoWins,
-	PlayerOneComputerWins, PlayerTwoComputerWins;
-	static boolean debugComputers, printComputerWins;
+	private static Scanner scan;
+	private static Game game;
+	private static String row, amount, input;
+	private static int computerGames;
 
 	public static void main(String[] args)
 	{
 		scan = new Scanner(System.in);
 		input = "Start";
 		game = new Game();
-		computerGames = 0;
-		PlayerOneWins = 0;
-		PlayerTwoWins = 0;
-		PlayerOneComputerWins = 0;
-		PlayerTwoComputerWins = 0;
-		debugComputers = false;
-		printComputerWins = false;
-		
 		StateLibrary.createAllStates();
 		Menu();
 	}
@@ -60,7 +50,7 @@ public class Nim
 			{
 				Iterator<State> stateIterator = StateLibrary.getStates();
 				State s = null;
-				while(stateIterator.hasNext())
+				while (stateIterator.hasNext())
 				{
 					s = stateIterator.next();
 					System.out.println(s.getOne() + " " + s.getTwo() + " " + s.getThree() + " " + s.getValue());
@@ -68,10 +58,10 @@ public class Nim
 			}
 			else if ("wins".equalsIgnoreCase(input))
 			{
-				System.out.println("Player One has won " + PlayerOneWins + " game(s).");
-				System.out.println("Player Two has won " + PlayerTwoWins + " game(s).");
-				System.out.println("Player One as a computer has won " + PlayerOneComputerWins + " game(s).");
-				System.out.println("Player Two as a computer has won " + PlayerTwoComputerWins + " game(s).");
+				System.out.println("Player One has won " + game.getPlayerOne().getWinCount() + " game(s).");
+				System.out.println("Player Two has won " + game.getPlayerTwo().getWinCount() + " game(s).");
+				System.out.println("Player One as a computer has won " + game.getPlayerOne().getWinAsComputerCount() + " game(s).");
+				System.out.println("Player Two as a computer has won " + game.getPlayerTwo().getWinAsComputerCount() + " game(s).");
 			}
 		}
 		System.out.println("Goodbye");
@@ -95,54 +85,21 @@ public class Nim
 	{
 
 		System.out.println("Good luck to both players!");
-		if (game.getPlayerOne().isComputer() && game.getPlayerTwo().isComputer())
+		if (game.bothPlayersAreComputers())
 		{
-			System.out.println("How many games would you like the computers to play?");
-			input = scan.nextLine();
-			try
-			{
-				computerGames = Integer.parseInt(input);
-			}
-			catch (Exception e)
-			{
-				try
-				{
-					if ("k".endsWith(input.toLowerCase()))
-					{
-						input = input.substring(0, input.length() - 1);
-						computerGames = Integer.parseInt(input);
-						computerGames *= 1000;
-					}
-					else if ("m".endsWith(input.toLowerCase()))
-					{
-						input = input.substring(0, input.length() - 1);
-						computerGames = Integer.parseInt(input);
-						computerGames *= 1000000;
-					}
-					else
-					{
-						System.out.println("Invalid input, defaulting to 1");
-						computerGames = 1;
-					}
-				}
-				catch (Exception ex)
-				{
-					System.out.println("Invalid input, defaulting to 1");
-					computerGames = 1;
-				}
-			}
+			getComputerGameCount();
 		}
 		do
 		{
-			game = new Game(game.getPlayerOne(), game.getPlayerTwo());
+			game.reset();
 			while (!game.gameEnded())
 			{
-				if (computerGames <= 0 || debugComputers)
+				if (computerGames <= 0)
 				{
 					System.out.println("It is " + game.getPlayerTurn() + "'s turn.");
 					printGame();
 				}
-				if (game.isPlayerComputer())
+				if (game.isCurrentPlayerComputer())
 				{
 					String[] sa = StateLibrary.getBestMove().split(":");
 					row = sa[0];
@@ -154,61 +111,91 @@ public class Nim
 					amount = amount();
 				}
 				game.take(row, amount);
-				if (computerGames <= 0 || debugComputers)
+				if (computerGames <= 0)
 				{
 					System.out.println(game.getPlayerTurn() + " takes " + amount + " from " + row + ".");
 				}
 				game.switchTurn();
 			}
+			addWins();
 			if (computerGames <= 0)
 			{
 				System.out.println("Congratulations to " + game.getPlayerTurn() + ", you win!");
-				if (game.isPlayerOneTurn())
-				{
-					if (game.getPlayerOne().isComputer())
-					{
-						PlayerOneComputerWins++;
-					}
-					else
-					{
-						PlayerOneWins++;
-					}
-				}
-				else
-				{
-					if (game.getPlayerTwo().isComputer())
-					{
-						PlayerTwoComputerWins++;
-					}
-					else
-					{
-						PlayerTwoWins++;
-					}
-				}
 			}
 			else
 			{
-				if (printComputerWins)
-				{
-					System.out.println("Congratulations to " + game.getPlayerTurn() + ", you win!");
-				}
 				System.out.println("Game finished. " + (computerGames - 1) + " more games to play.");
-				if (game.isPlayerOneTurn())
-				{
-
-					PlayerOneComputerWins++;
-				}
-				else
-				{
-					PlayerTwoComputerWins++;
-				}
 			}
 			StateLibrary.valueMoves(game.isPlayerOneTurn());
 			computerGames--;
 		}
 		while (computerGames > 0);
 	}
+	
+	public static void addWins()
+	{
+		if (game.isPlayerOneTurn())
+		{
+			if (game.getPlayerOne().isComputer())
+			{
+				game.getPlayerOne().addComputerWin();
+			}
+			else
+			{
+				game.getPlayerOne().addWin();
+			}
+		}
+		else
+		{
+			if (game.getPlayerTwo().isComputer())
+			{
+				game.getPlayerTwo().addComputerWin();
+			}
+			else
+			{
+				game.getPlayerTwo().addWin();
+			}
+		}
+	}
 
+	public static void getComputerGameCount()
+	{
+		System.out.println("How many games would you like the computers to play?");
+		input = scan.nextLine();
+		try
+		{
+			computerGames = Integer.parseInt(input);
+		}
+		catch (Exception e)
+		{
+			try
+			{
+				if ("k".endsWith(input.toLowerCase()))
+				{
+					input = input.substring(0, input.length() - 1);
+					computerGames = Integer.parseInt(input);
+					computerGames *= 1000;
+				}
+				else if ("m".endsWith(input.toLowerCase()))
+				{
+					input = input.substring(0, input.length() - 1);
+					computerGames = Integer.parseInt(input);
+					computerGames *= 1000000;
+				}
+				else
+				{
+					System.out.println("Invalid input, defaulting to 1");
+					computerGames = 1;
+				}
+			}
+			catch (Exception ex)
+			{
+				System.out.println("Invalid input, defaulting to 1");
+				computerGames = 1;
+			}
+		}
+	}
+	
 	public static void printGame()
 	{
 		System.out.print("1 \t");
@@ -251,8 +238,8 @@ public class Nim
 				System.out.println("3");
 			}
 			String row = scan.nextLine();
-			if ("1".equals(row) && Game.getCurrentState().getOne() > 0 || "2".equals(row) && Game.getCurrentState().getTwo() > 0 || 
-					"3".equals(row) && Game.getCurrentState().getThree() > 0)
+			if ("1".equals(row) && Game.getCurrentState().getOne() > 0 || "2".equals(row) && Game.getCurrentState().getTwo() > 0 || "3".equals(row)
+					&& Game.getCurrentState().getThree() > 0)
 			{
 				return row;
 			}
@@ -290,6 +277,7 @@ public class Nim
 			}
 		}
 	}
+<<<<<<< HEAD
 
 	
 	public static Scanner getScan() {
@@ -332,4 +320,6 @@ public class Nim
 		Nim.input = input;
 	}
 
+=======
+>>>>>>> origin/master
 }
