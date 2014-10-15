@@ -6,14 +6,14 @@ import java.util.Scanner;
 public class Nim
 {
 	private static Scanner scan;
+	private static String row;
 	private static Game game;
-	private static String row, amount, input;
+
 	private static int computerGames;
 
 	public static void main(String[] args)
 	{
 		scan = new Scanner(System.in);
-		input = "Start";
 		game = new Game();
 		StateLibrary.createAllStates();
 		Menu();
@@ -22,13 +22,14 @@ public class Nim
 	public static void Menu()
 	{
 		System.out.println("Welcome to NIM!");
+		String menuOption = "Start";
 		setup();
 
-		while (!"quit".equalsIgnoreCase(input) && !"0".equalsIgnoreCase(input))
+		while (!"quit".equalsIgnoreCase(menuOption) && !"0".equalsIgnoreCase(menuOption))
 		{
 			if (computerGames > 0)
 			{
-				input = "play";
+				menuOption = "play";
 			}
 			else
 			{
@@ -36,17 +37,17 @@ public class Nim
 				System.out.println("0: Quit");
 				System.out.println("1: Setup");
 				System.out.println("2: Play");
-				input = scan.nextLine();
+				menuOption = scan.nextLine();
 			}
-			if ("1".equalsIgnoreCase(input) || "setup".equalsIgnoreCase(input))
+			if ("1".equalsIgnoreCase(menuOption) || "setup".equalsIgnoreCase(menuOption))
 			{
 				setup();
 			}
-			else if ("2".equalsIgnoreCase(input) || "play".equalsIgnoreCase(input))
+			else if ("2".equalsIgnoreCase(menuOption) || "play".equalsIgnoreCase(menuOption))
 			{
 				play();
 			}
-			else if ("values".equalsIgnoreCase(input))
+			else if ("values".equalsIgnoreCase(menuOption))
 			{
 				Iterator<State> stateIterator = StateLibrary.getStates();
 				State s = null;
@@ -56,12 +57,15 @@ public class Nim
 					System.out.println(s.getOne() + " " + s.getTwo() + " " + s.getThree() + " " + s.getValue());
 				}
 			}
-			else if ("wins".equalsIgnoreCase(input))
+			else if ("wins".equalsIgnoreCase(menuOption))
 			{
-				System.out.println("Player One has won " + game.getPlayerOne().getWinCount() + " game(s).");
-				System.out.println("Player Two has won " + game.getPlayerTwo().getWinCount() + " game(s).");
-				System.out.println("Player One as a computer has won " + game.getPlayerOne().getWinAsComputerCount() + " game(s).");
-				System.out.println("Player Two as a computer has won " + game.getPlayerTwo().getWinAsComputerCount() + " game(s).");
+				Player playerOne = game.getPlayerOne();
+				Player playerTwo = game.getPlayerTwo();
+				
+				System.out.println("Player One has won " + playerOne.getWinCount() + " game(s).");
+				System.out.println("Player Two has won " + playerTwo.getWinCount() + " game(s).");
+				System.out.println("Player One as a computer has won " + playerOne.getWinAsComputerCount() + " game(s).");
+				System.out.println("Player Two as a computer has won " + playerTwo.getWinAsComputerCount() + " game(s).");
 			}
 		}
 		System.out.println("Goodbye");
@@ -97,6 +101,7 @@ public class Nim
 			game.reset();
 			while (!game.gameEnded())
 			{
+				String amount = "";
 				if (computerGames <= 0)
 				{
 					System.out.println("It is " + game.getPlayerTurn() + "'s turn.");
@@ -164,25 +169,25 @@ public class Nim
 	public static void getComputerGameCount()
 	{
 		System.out.println("How many games would you like the computers to play?");
-		input = scan.nextLine();
+		String numOfGames = scan.nextLine();
 		try
 		{
-			computerGames = Integer.parseInt(input);
+			computerGames = Integer.parseInt(numOfGames);
 		}
 		catch (Exception e)
 		{
 			try
 			{
-				if ("k".endsWith(input.toLowerCase()))
+				if ("k".endsWith(numOfGames.toLowerCase()))
 				{
-					input = input.substring(0, input.length() - 1);
-					computerGames = Integer.parseInt(input);
+					numOfGames = numOfGames.substring(0, numOfGames.length() - 1);
+					computerGames = Integer.parseInt(numOfGames);
 					computerGames *= 1000;
 				}
-				else if ("m".endsWith(input.toLowerCase()))
+				else if ("m".endsWith(numOfGames.toLowerCase()))
 				{
-					input = input.substring(0, input.length() - 1);
-					computerGames = Integer.parseInt(input);
+					numOfGames = numOfGames.substring(0, numOfGames.length() - 1);
+					computerGames = Integer.parseInt(numOfGames);
 					computerGames *= 1000000;
 				}
 				else
@@ -254,6 +259,7 @@ public class Nim
 	{
 		while (true)
 		{
+			
 			System.out.println("How many would you like to take from row " + row + "?");
 			System.out.println("Any number from 1 to " + game.getRowAmount(row));
 			System.out.println("Type 'row' to reselect a row.");
