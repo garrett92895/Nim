@@ -213,6 +213,7 @@ public class StateLibrary
 
 	public static State getStateWithSameValues(State s)
 	{
+		State stateWithSameValues = null;
 		for (State st : states)
 		{
 			if ((s.getOne() == st.getOne() && s.getTwo() == st.getTwo() && s.getThree() == st.getThree())
@@ -222,10 +223,11 @@ public class StateLibrary
 					|| (s.getOne() == st.getThree() && s.getTwo() == st.getOne() && s.getThree() == st.getTwo())
 					|| (s.getOne() == st.getThree() && s.getTwo() == st.getTwo() && s.getThree() == st.getOne()))
 			{
-				return st;
+				stateWithSameValues = st;
+				break;
 			}
 		}
-		return null;
+		return stateWithSameValues;
 	}
 
 	public static Iterator<State> getStates()
