@@ -221,10 +221,10 @@ public class StateLibrary
 					|| (s.getOne() == st.getTwo() && s.getTwo() == st.getOne() && s.getThree() == st.getThree())
 					|| (s.getOne() == st.getTwo() && s.getTwo() == st.getThree() && s.getThree() == st.getOne())
 					|| (s.getOne() == st.getThree() && s.getTwo() == st.getOne() && s.getThree() == st.getTwo())
-					|| (s.getOne() == st.getThree() && s.getTwo() == st.getTwo() && s.getThree() == st.getOne()))
+					|| (s.getOne() == st.getThree() && s.getTwo() == st.getTwo() && s.getThree() == st.getOne())
+					&& stateWithSameValues != null)
 			{
 				stateWithSameValues = st;
-				break;
 			}
 		}
 		return stateWithSameValues;
