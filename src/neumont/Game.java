@@ -131,16 +131,17 @@ public class Game
 	
 	public int getRowAmount(String row)
 	{
+		int rowAmount = 0;
 		switch (row)
 		{
 			case "1":
-				return getCurrentState().getOne();
+				rowAmount = getCurrentState().getOne();
 			case "2":
-				return getCurrentState().getTwo();
+				rowAmount = getCurrentState().getTwo();
 			case "3":
-				return getCurrentState().getThree();
+				rowAmount = getCurrentState().getThree();
 		}
-		return 0;
+		return rowAmount;
 	}
 	
 	public void take(String row, String amount)
@@ -162,7 +163,7 @@ public class Game
 					break;
 			}
 		}
-		catch(Exception e){}
+		catch(Exception e){e.printStackTrace();}
 	}
 	
 	public void reset()

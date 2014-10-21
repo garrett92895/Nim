@@ -120,6 +120,7 @@ public class StateLibrary
 
 	public static String getTo(State to, State from)
 	{
+		String getTo = null;
 		int a = to.getOne();
 		int b = to.getTwo();
 		int c = to.getThree();
@@ -167,19 +168,19 @@ public class StateLibrary
 				int c2 = from.getThree();
 				if (a1 < a2 && b1 == b2 && c1 == c2)
 				{
-					return ("1:" + (a2 - a1));
+					getTo = ("1:" + (a2 - a1));
 				}
 				else if (a1 == a2 && b1 < b2 && c1 == c2)
 				{
-					return ("2:" + (b2 - b1));
+					getTo = ("2:" + (b2 - b1));
 				}
 				else if (a1 == a2 && b1 == b2 && c1 < c2)
 				{
-					return ("3:" + (c2 - c1));
+					getTo = ("3:" + (c2 - c1));
 				}
 			}
 		}
-		return null;
+		return getTo;
 	}
 
 	public static void valueMoves(boolean PlayerOneWin)
