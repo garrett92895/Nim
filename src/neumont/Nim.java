@@ -275,6 +275,7 @@ public class Nim
 			}
 			catch (Exception e)
 			{
+				e.printStackTrace();
 			}
 			if ("row".equalsIgnoreCase(amount))
 			{
